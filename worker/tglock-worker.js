@@ -38,9 +38,12 @@ export default {
   async fetch(request, env = {}) {
     const url = new URL(request.url);
 
-    if (url.pathname !== "/apiws") {
+    if (url.pathname !== "/api/ws" && url.pathname !== "/") {
       return new Response("not found", { status: 404 });
     }
+    if (url.pathname === "/") {
+     return new Response("TG Lock Worker is running", { status: 200 });
+   }
     if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") {
       return new Response("expected a websocket upgrade", { status: 426 });
     }
